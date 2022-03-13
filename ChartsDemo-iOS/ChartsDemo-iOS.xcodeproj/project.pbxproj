@@ -14,6 +14,8 @@
 		068A9B191FBBF351003CF1AD /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5B8EAF2F1AB32E15009697AA /* Images.xcassets */; };
 		068A9B1A1FBBF355003CF1AD /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B64D06EA1FB199130067418D /* Launch Screen.storyboard */; };
 		068A9B1B1FBBF366003CF1AD /* radar_marker@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5B613DA31D526AD5000F1E98 /* radar_marker@3x.png */; };
+		1BD467AD27DE3F7400C22542 /* RangeBarChartViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BD467AC27DE3F7400C22542 /* RangeBarChartViewController.swift */; };
+		1BD467B127DE401100C22542 /* RangeBarChartViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1BD467B027DE401100C22542 /* RangeBarChartViewController.xib */; };
 		225B36201F6EB9A50005B3D5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 225B361F1F6EB9A50005B3D5 /* AppDelegate.swift */; };
 		225B36311F6EB9EE0005B3D5 /* DemoBaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 225B362F1F6EB9EE0005B3D5 /* DemoBaseViewController.swift */; };
 		225B36321F6EB9EE0005B3D5 /* DemoListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 225B36301F6EB9EE0005B3D5 /* DemoListViewController.swift */; };
@@ -199,6 +201,8 @@
 		0439A3521C9FF95F00496F83 /* PiePolylineChartViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PiePolylineChartViewController.m; sourceTree = "<group>"; };
 		0471CBFB1CA1090A00E52DBC /* PiePolylineChartViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PiePolylineChartViewController.xib; sourceTree = "<group>"; };
 		0630AE391D8126C0008859B0 /* Charts.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Charts.xcodeproj; path = ../Charts.xcodeproj; sourceTree = "<group>"; };
+		1BD467AC27DE3F7400C22542 /* RangeBarChartViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RangeBarChartViewController.swift; sourceTree = "<group>"; };
+		1BD467B027DE401100C22542 /* RangeBarChartViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RangeBarChartViewController.xib; sourceTree = "<group>"; };
 		225B361D1F6EB9A50005B3D5 /* ChartsDemo-iOS-Swift.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "ChartsDemo-iOS-Swift.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		225B361F1F6EB9A50005B3D5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		225B362F1F6EB9EE0005B3D5 /* DemoBaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DemoBaseViewController.swift; sourceTree = "<group>"; };
@@ -396,6 +400,7 @@
 				225B36581F6EBA410005B3D5 /* BarChartViewController.swift */,
 				225B364E1F6EBA410005B3D5 /* BubbleChartViewController.swift */,
 				225B365A1F6EBA410005B3D5 /* CandleStickChartViewController.swift */,
+				1BD467AC27DE3F7400C22542 /* RangeBarChartViewController.swift */,
 				225B36481F6EBA410005B3D5 /* ColoredLineChartViewController.swift */,
 				225B36571F6EBA410005B3D5 /* CombinedChartViewController.swift */,
 				225B36531F6EBA410005B3D5 /* CubicLineChartViewController.swift */,
@@ -456,6 +461,7 @@
 				5BEAED171ABBFB340013F194 /* ScatterChartViewController.xib */,
 				5BEAED3F1ABC1AC60013F194 /* SinusBarChartViewController.xib */,
 				5BEAED1A1ABBFB340013F194 /* StackedBarChartViewController.xib */,
+				1BD467B027DE401100C22542 /* RangeBarChartViewController.xib */,
 			);
 			path = Demos;
 			sourceTree = "<group>";
@@ -656,6 +662,7 @@
 				TargetAttributes = {
 					225B361C1F6EB9A50005B3D5 = {
 						CreatedOnToolsVersion = 9.0;
+						DevelopmentTeam = 5FRV5G4F5S;
 						LastSwiftMigration = 1150;
 					};
 					5B57BBAE1A9B26AA0036A6CC = {
@@ -728,6 +735,7 @@
 				225B36801F6EBA640005B3D5 /* LineChartTimeViewController.xib in Resources */,
 				225B36811F6EBA640005B3D5 /* MultipleBarChartViewController.xib in Resources */,
 				225B367D1F6EBA640005B3D5 /* LineChart1ViewController.xib in Resources */,
+				1BD467B127DE401100C22542 /* RangeBarChartViewController.xib in Resources */,
 				068A9B1B1FBBF366003CF1AD /* radar_marker@3x.png in Resources */,
 				225B36721F6EBA5E0005B3D5 /* DemoListViewController.xib in Resources */,
 				225B36891F6EBA640005B3D5 /* ScatterChartViewController.xib in Resources */,
@@ -796,6 +804,7 @@
 				225B363A1F6EBA040005B3D5 /* DateValueFormatter.swift in Sources */,
 				5B442CD223D9B0A300B1F801 /* BalloonMarker.swift in Sources */,
 				225B366D1F6EBA470005B3D5 /* PiePolylineChartViewController.swift in Sources */,
+				1BD467AD27DE3F7400C22542 /* RangeBarChartViewController.swift in Sources */,
 				225B366F1F6EBA470005B3D5 /* BarChartViewController.swift in Sources */,
 				225B36601F6EBA470005B3D5 /* LineChart2ViewController.swift in Sources */,
 				225B366C1F6EBA470005B3D5 /* HorizontalBarChartViewController.swift in Sources */,
@@ -897,7 +906,7 @@
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = 5FRV5G4F5S;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = "$(SRCROOT)/Supporting Files/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
@@ -929,7 +938,7 @@
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = "";
+				DEVELOPMENT_TEAM = 5FRV5G4F5S;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				INFOPLIST_FILE = "$(SRCROOT)/Supporting Files/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
