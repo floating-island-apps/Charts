@@ -18,103 +18,91 @@ open class RangeBarChartRenderer: LineScatterCandleRadarRenderer
         
         self.dataProvider = dataProvider
     }
+
+    private var _barRect = CGRect()
     
     override open func drawData(context: CGContext)
     {
-        guard let dataProvider = dataProvider, let rangeBarData = dataProvider.rangeBarData else { return }
+        guard let rangeBarData = dataProvider?.rangeBarData else { return }
 
         // If we redraw the data, remove and repopulate accessible elements to update label values and frames
         accessibleChartElements.removeAll()
-
-        // Make the chart header the first element in the accessible elements array
+        
         if let chart = dataProvider as? RangeBarChartView
         {
+            // Make the chart header the first element in the accessible elements array
             let element = createAccessibleHeader(usingChart: chart,
                                                  andData: rangeBarData,
-                                                 withDefaultDescription: "CandleStick Chart")
+                                                 withDefaultDescription: "RangeBar Chart")
             accessibleChartElements.append(element)
         }
 
-        for case let set as RangeBarChartDataSetProtocol in rangeBarData where set.isVisible
-        {
-            drawDataSet(context: context, dataSet: set)
-        }
+        // TODO: Due to the potential complexity of data presented in Scatter charts, a more usable way
+        // for VO accessibility would be to use axis based traversal rather than by dataset.
+        // Hence, accessibleChartElements is not populated below. (Individual renderers guard against dataSource being their respective views)
+        let sets = rangeBarData.dataSets as? [RangeBarChartDataSet]
+        assert(sets != nil, "Datasets for RangeBarChartRenderer must conform to IScatterChartDataSet")
+        
+        let drawDataSet = { self.drawDataSet(context: context, dataSet: $0) }
+        sets!.lazy
+            .filter(\.isVisible)
+            .forEach(drawDataSet)
     }
     
-    private var _rangePoints = [CGPoint](repeating: CGPoint(), count: 2)
     private var _lineSegments = [CGPoint](repeating: CGPoint(), count: 2)
-    private var _barRect = CGRect()
     
     @objc open func drawDataSet(context: CGContext, dataSet: RangeBarChartDataSetProtocol)
     {
-        guard
-            let dataProvider = dataProvider
-        else { return }
-
+        guard let dataProvider = dataProvider else { return }
+        
         let trans = dataProvider.getTransformer(forAxis: dataSet.axisDependency)
         
         let phaseY = animator.phaseY
-        let barSpace = dataSet.barSpace
         let barWidth = dataSet.barWidth
         let barColor = dataSet.barColor
         
-        _xBounds.set(chart: dataProvider, dataSet: dataSet, animator: animator)
+        let entryCount = dataSet.entryCount
+        
+        var point = CGPoint()
+        
+        let valueToPixelMatrix = trans.valueToPixelMatrix
         
         context.saveGState()
-        
-        context.setLineWidth(dataSet.barWidth)
-
-        for j in _xBounds
+            
+        for j in 0 ..< Int(min(ceil(Double(entryCount) * animator.phaseX), Double(entryCount)))
         {
-            // get the entry
-            guard let e = dataSet.entryForIndex(j) as? RangeBarChartDataEntry else { continue }
+            guard let e = dataSet.entryForIndex(j) as? RangeBarChartDataEntry
+            else { continue }
+                
+            point.x = CGFloat(e.x)
+            point.y = CGFloat(e.y * phaseY)
+            point = point.applying(valueToPixelMatrix)
             
-            let xPos = e.x
-             
-            let high = e.high
-            let low = e.low
-            let colors = e.colors.count > 0 ? e.colors : [barColor, barColor]
-            
-            let doesContainMultipleDataSets = (dataProvider.rangeBarData?.count ?? 1) > 1
 
-            var accessibilityRect = CGRect(x: CGFloat(xPos) + 0.5 - barSpace,
-                                           y: CGFloat(low * phaseY),
-                                           width: (2 * barSpace) - 1.0,
-                                           height: CGFloat(abs(high - low) * phaseY))
-            trans.rectValueToPixel(&accessibilityRect)
-
-            _rangePoints[0].x = CGFloat(xPos)
-            _rangePoints[0].y = CGFloat(high * phaseY)
-            _rangePoints[1].x = CGFloat(xPos)
-            _rangePoints[1].y = CGFloat(low * phaseY)
-            
-            _barRect.origin.x = CGFloat(xPos) - barWidth / 2
-            _barRect.origin.y = CGFloat(high * phaseY)
+            _barRect.origin.x = CGFloat(e.x)
+            _barRect.origin.y = CGFloat(e.high * phaseY)
             _barRect.size.width = barWidth
-            _barRect.size.height = _rangePoints[0].y - _rangePoints[1].y
+            _barRect.size.height = CGFloat(abs(e.high - e.low) * phaseY)
             trans.rectValueToPixel(&_barRect)
-            
-            
-//            trans.pointValuesToPixel(&_rangePoints)
-//            context.strokeLineSegments(between: _rangePoints)
-            
-            context.drawLinearGradient(in: _barRect, colors: colors)
-
-            
-            let axElement = createAccessibleElement(withIndex: j,
-                                                    container: dataProvider,
-                                                    dataSet: dataSet)
-            { element in
-                element.accessibilityLabel = "\(doesContainMultipleDataSets ? "\(dataSet.label ?? "Dataset")" : "") " + "low: \(low), high: \(high)"
-                element.accessibilityFrame = accessibilityRect
+                
+            if !viewPortHandler.isInBoundsRight(point.x)
+            {
+                break
             }
-
-            accessibleChartElements.append(axElement)
+                
+            if !viewPortHandler.isInBoundsLeft(point.x) ||
+                !viewPortHandler.isInBoundsY(point.y)
+            {
+                continue
+            }
+                
+            //            trans.pointValuesToPixel(&_rangePoints)
+            //            context.strokeLineSegments(between: _rangePoints)
+            
+            let colors = e.colors.count > 0 ? e.colors : [barColor, barColor]
+            context.drawLinearGradient(in: _barRect, colors: colors)
         }
-
-        // Post this notification to let VoiceOver account for the redrawn frames
-        accessibilityPostLayoutChangedNotification()
-
+            
         context.restoreGState()
     }
     
@@ -134,9 +122,8 @@ open class RangeBarChartRenderer: LineScatterCandleRadarRenderer
             
             for i in rangeBarData.indices
             {
-                guard let
-                    dataSet = rangeBarData[i] as? BarLineScatterCandleBubbleChartDataSetProtocol,
-                    shouldDrawValues(forDataSet: dataSet)
+                guard let dataSet = rangeBarData[i] as? RangeBarChartDataSetProtocol,
+                      shouldDrawValues(forDataSet: dataSet)
                 else { continue }
                 
                 let valueFont = dataSet.valueFont
@@ -150,17 +137,17 @@ open class RangeBarChartRenderer: LineScatterCandleRadarRenderer
                 
                 let angleRadians = dataSet.valueLabelAngle.DEG2RAD
                 
-                _xBounds.set(chart: dataProvider, dataSet: dataSet, animator: animator)
-                
+                let shapeSize = dataSet.barWidth
                 let lineHeight = valueFont.lineHeight
-                let yOffset: CGFloat = lineHeight + 5.0
+                
+                _xBounds.set(chart: dataProvider, dataSet: dataSet, animator: animator)
                 
                 for j in _xBounds
                 {
-                    guard let e = dataSet.entryForIndex(j) as? RangeBarChartDataEntry else { break }
+                    guard let e = dataSet.entryForIndex(j) else { break }
                     
                     pt.x = CGFloat(e.x)
-                    pt.y = CGFloat(e.high * phaseY)
+                    pt.y = CGFloat(e.y * phaseY)
                     pt = pt.applying(valueToPixelMatrix)
                     
                     if !viewPortHandler.isInBoundsRight(pt.x)
@@ -168,19 +155,25 @@ open class RangeBarChartRenderer: LineScatterCandleRadarRenderer
                         break
                     }
                     
-                    if !viewPortHandler.isInBoundsLeft(pt.x) || !viewPortHandler.isInBoundsY(pt.y)
+                    // make sure the lines don't do shitty things outside bounds
+                    if !viewPortHandler.isInBoundsLeft(pt.x)
+                        || !viewPortHandler.isInBoundsY(pt.y)
                     {
                         continue
                     }
                     
+                    let text = formatter.stringForValue(
+                        e.y,
+                        entry: e,
+                        dataSetIndex: i,
+                        viewPortHandler: viewPortHandler
+                    )
+                    
                     if dataSet.isDrawValuesEnabled
                     {
-                        context.drawText(formatter.stringForValue(e.high,
-                                                                  entry: e,
-                                                                  dataSetIndex: i,
-                                                                  viewPortHandler: viewPortHandler),
+                        context.drawText(text,
                                          at: CGPoint(x: pt.x,
-                                                     y: pt.y - yOffset),
+                                                     y: pt.y - shapeSize - lineHeight),
                                          align: .center,
                                          angleRadians: angleRadians,
                                          attributes: [.font: valueFont,
@@ -206,7 +199,7 @@ open class RangeBarChartRenderer: LineScatterCandleRadarRenderer
     {
         guard
             let dataProvider = dataProvider,
-            let rangeBarData = dataProvider.rangeBarData
+            let scatterData = dataProvider.rangeBarData
         else { return }
         
         context.saveGState()
@@ -214,22 +207,16 @@ open class RangeBarChartRenderer: LineScatterCandleRadarRenderer
         for high in indices
         {
             guard
-                let set = rangeBarData[high.dataSetIndex] as? RangeBarChartDataSetProtocol,
+                let set = scatterData[high.dataSetIndex] as? ScatterChartDataSetProtocol,
                 set.isHighlightEnabled
             else { continue }
             
-            guard let e = set.entryForXValue(high.x, closestToY: high.y) as? RangeBarChartDataEntry else { continue }
+            guard let entry = set.entryForXValue(high.x, closestToY: high.y) else { continue }
             
-            if !isInBoundsX(entry: e, dataSet: set)
-            {
-                continue
-            }
-            
-            let trans = dataProvider.getTransformer(forAxis: set.axisDependency)
+            if !isInBoundsX(entry: entry, dataSet: set) { continue }
             
             context.setStrokeColor(set.highlightColor.cgColor)
             context.setLineWidth(set.highlightLineWidth)
-            
             if set.highlightLineDashLengths != nil
             {
                 context.setLineDash(phase: set.highlightLineDashPhase, lengths: set.highlightLineDashLengths!)
@@ -239,11 +226,12 @@ open class RangeBarChartRenderer: LineScatterCandleRadarRenderer
                 context.setLineDash(phase: 0.0, lengths: [])
             }
             
-            let lowValue = e.low * Double(animator.phaseY)
-            let highValue = e.high * Double(animator.phaseY)
-            let y = (lowValue + highValue) / 2.0
+            let x = entry.x // get the x-position
+            let y = entry.y * Double(animator.phaseY)
             
-            let pt = trans.pixelForValues(x: e.x, y: y)
+            let trans = dataProvider.getTransformer(forAxis: set.axisDependency)
+            
+            let pt = trans.pixelForValues(x: x, y: y)
             
             high.setDraw(pt: pt)
             
@@ -252,19 +240,6 @@ open class RangeBarChartRenderer: LineScatterCandleRadarRenderer
         }
         
         context.restoreGState()
-    }
-
-    private func createAccessibleElement(withIndex idx: Int,
-                                         container: RangeBarChartDataProvider,
-                                         dataSet: RangeBarChartDataSetProtocol,
-                                         modifier: (NSUIAccessibilityElement) -> ()) -> NSUIAccessibilityElement
-    {
-        let element = NSUIAccessibilityElement(accessibilityContainer: container)
-
-        // The modifier allows changing of traits and frame depending on highlight, rotation, etc
-        modifier(element)
-
-        return element
     }
 }
 
@@ -290,7 +265,7 @@ extension CGContext
         saveGState()
         
         let cornerRadius = roundCorner ? rect.size.width / 2 : 0
-        let path  = NSUIBezierPath(roundedRect: rect, cornerRadius: cornerRadius)
+        let path = NSUIBezierPath(roundedRect: rect, cornerRadius: cornerRadius)
         addPath(path.cgPath)
         clip()
         
