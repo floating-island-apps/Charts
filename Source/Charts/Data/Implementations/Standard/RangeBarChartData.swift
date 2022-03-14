@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import CoreGraphics
 
 open class RangeBarChartData: BarLineScatterCandleBubbleChartData
 {
@@ -22,13 +23,5 @@ open class RangeBarChartData: BarLineScatterCandleBubbleChartData
     public required init(arrayLiteral elements: ChartDataSetProtocol...)
     {
         super.init(dataSets: elements)
-    }
-    
-    /// - Returns: The maximum shape-size across all DataSets.
-    @objc open func getGreatestShapeSize() -> CGFloat
-    {
-        return (_dataSets as? [ScatterChartDataSetProtocol])?
-            .max { $0.scatterShapeSize < $1.scatterShapeSize }?
-            .scatterShapeSize ?? 0
     }
 }
