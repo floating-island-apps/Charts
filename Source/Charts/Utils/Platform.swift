@@ -15,6 +15,7 @@ types are aliased to either their UI* implementation (on iOS) or their NS* imple
 	public typealias NSUIScrollView = UIScrollView
     public typealias NSUIScreen = UIScreen
 	public typealias NSUIDisplayLink = CADisplayLink
+    public typealias NSUIBezierPath = UIBezierPath
 
     extension NSUIColor
     {
@@ -75,6 +76,7 @@ types are aliased to either their UI* implementation (on iOS) or their NS* imple
     public typealias NSUIImage = NSImage
     public typealias NSUIScrollView = NSScrollView
     public typealias NSUIScreen = NSScreen
+    public typealias NSUIBezierPath = NSBezierPath
 
 	/** On OS X there is no CADisplayLink. Use a 60 fps timer to render the animations. */
 	public class NSUIDisplayLink

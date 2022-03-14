@@ -290,7 +290,7 @@ extension CGContext
         saveGState()
         
         let cornerRadius = roundCorner ? rect.size.width / 2 : 0
-        let path  = UIBezierPath(roundedRect: rect, cornerRadius: cornerRadius)
+        let path  = NSUIBezierPath(roundedRect: rect, cornerRadius: cornerRadius)
         addPath(path.cgPath)
         clip()
         
