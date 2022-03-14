@@ -16,7 +16,7 @@ open class RangeBarChartDataEntry: ChartDataEntry
     @objc open var low = Double(0.0)
     
     /// gradient color value
-    @objc open var colors = [UIColor]()
+    @objc open var colors = [NSUIColor]()
     
     public required init()
     {
