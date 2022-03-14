@@ -32,6 +32,7 @@
 		1BF5E0C327DEE0660025D4EC /* RangeBarChartDataSetProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BF5E0C227DEE0660025D4EC /* RangeBarChartDataSetProtocol.swift */; };
 		1BF5E0C527DEE0830025D4EC /* RangeBarChartDataProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BF5E0C427DEE0830025D4EC /* RangeBarChartDataProvider.swift */; };
 		1BF5E0C727DEE09C0025D4EC /* RangeBarChartRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BF5E0C627DEE09C0025D4EC /* RangeBarChartRenderer.swift */; };
+		1BF5E0C927DF17FC0025D4EC /* ScatterChartDataEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BF5E0C827DF17FC0025D4EC /* ScatterChartDataEntry.swift */; };
 		219192CA6B4895319AB49DCA /* BarLineScatterCandleBubbleRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B1C588E9DF6FFD56D7ADF8E /* BarLineScatterCandleBubbleRenderer.swift */; };
 		221CA2922588FCBC00C2DD1E /* Sequence+KeyPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 221CA2912588FCBC00C2DD1E /* Sequence+KeyPath.swift */; };
 		2243BBFD1FF156EC00B49D0B /* EquatableTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2243BBFB1FF156D000B49D0B /* EquatableTests.swift */; };
@@ -207,6 +208,7 @@
 		1BF5E0C227DEE0660025D4EC /* RangeBarChartDataSetProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RangeBarChartDataSetProtocol.swift; path = Source/Charts/Data/Interfaces/RangeBarChartDataSetProtocol.swift; sourceTree = "<group>"; };
 		1BF5E0C427DEE0830025D4EC /* RangeBarChartDataProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RangeBarChartDataProvider.swift; path = Source/Charts/Interfaces/RangeBarChartDataProvider.swift; sourceTree = "<group>"; };
 		1BF5E0C627DEE09C0025D4EC /* RangeBarChartRenderer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RangeBarChartRenderer.swift; path = Source/Charts/Renderers/RangeBarChartRenderer.swift; sourceTree = "<group>"; };
+		1BF5E0C827DF17FC0025D4EC /* ScatterChartDataEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScatterChartDataEntry.swift; sourceTree = "<group>"; };
 		1C02C3AF5C92FCFC18224C35 /* XAxisRenderer.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = XAxisRenderer.swift; path = Source/Charts/Renderers/XAxisRenderer.swift; sourceTree = "<group>"; };
 		1CBBC58C6CE1EBEE9852CE41 /* ChartsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ChartsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		1F3D55A7E6176D52DC957D27 /* XAxisRendererHorizontalBarChart.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = XAxisRendererHorizontalBarChart.swift; path = Source/Charts/Renderers/XAxisRendererHorizontalBarChart.swift; sourceTree = "<group>"; };
@@ -484,6 +486,7 @@
 				12409C3EA15787C11AF0D2BC /* ChartDataEntryBase.swift */,
 				BD02157CF8CEE1189BF681DA /* PieChartDataEntry.swift */,
 				91EEEDE2AB8F2DA3AFCF0733 /* RadarChartDataEntry.swift */,
+				1BF5E0C827DF17FC0025D4EC /* ScatterChartDataEntry.swift */,
 			);
 			name = ChartEntry;
 			sourceTree = "<group>";
@@ -889,6 +892,7 @@
 				C9F3DC272355F791000C3215 /* Platform+Gestures.swift in Sources */,
 				C20A62D8CB9120523D5FB650 /* LegendEntry.swift in Sources */,
 				369DEB23452CB436A3A1A644 /* MarkerImage.swift in Sources */,
+				1BF5E0C927DF17FC0025D4EC /* ScatterChartDataEntry.swift in Sources */,
 				9360348A04723E653FBC8B18 /* MarkerView.swift in Sources */,
 				78084A4F1D850D5775BC139E /* XAxis.swift in Sources */,
 				1BF5E0C327DEE0660025D4EC /* RangeBarChartDataSetProtocol.swift in Sources */,

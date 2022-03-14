@@ -72,7 +72,7 @@ open class ScatterChartRenderer: LineScatterCandleRadarRenderer
             
             for j in 0 ..< Int(min(ceil(Double(entryCount) * animator.phaseX), Double(entryCount)))
             {
-                guard let e = dataSet.entryForIndex(j) else { continue }
+                guard let e = dataSet.entryForIndex(j) as? ScatterChartDataEntry else { continue }
                 
                 point.x = CGFloat(e.x)
                 point.y = CGFloat(e.y * phaseY)
@@ -89,7 +89,8 @@ open class ScatterChartRenderer: LineScatterCandleRadarRenderer
                     continue
                 }
                 
-                renderer.renderShape(context: context, dataSet: dataSet, viewPortHandler: viewPortHandler, point: point, color: dataSet.color(atIndex: j))
+                let color = e.color != nil ? e.color! : dataSet.color(atIndex: j)
+                renderer.renderShape(context: context, dataSet: dataSet, viewPortHandler: viewPortHandler, point: point, color: color)
             }
             
             context.restoreGState()

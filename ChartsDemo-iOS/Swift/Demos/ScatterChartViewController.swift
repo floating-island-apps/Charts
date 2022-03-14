@@ -76,17 +76,17 @@ class ScatterChartViewController: DemoBaseViewController {
     }
     
     func setDataCount(_ count: Int, range: UInt32) {
-        let values1 = (0..<count).map { (i) -> ChartDataEntry in
+        let values1 = (0..<count).map { (i) -> ScatterChartDataEntry in
             let val = Double(arc4random_uniform(range) + 3)
-            return ChartDataEntry(x: Double(i), y: val)
+            return ScatterChartDataEntry(x: Double(i), y: val, color: .yellow)
         }
-        let values2 = (0..<count).map { (i) -> ChartDataEntry in
+        let values2 = (0..<count).map { (i) -> ScatterChartDataEntry in
             let val = Double(arc4random_uniform(range) + 3)
-            return ChartDataEntry(x: Double(i) + 0.33, y: val)
+            return ScatterChartDataEntry(x: Double(i) + 0.33, y: val, color: .purple)
         }
-        let values3 = (0..<count).map { (i) -> ChartDataEntry in
+        let values3 = (0..<count).map { (i) -> ScatterChartDataEntry in
             let val = Double(arc4random_uniform(range) + 3)
-            return ChartDataEntry(x: Double(i) + 0.66, y: val)
+            return ScatterChartDataEntry(x: Double(i) + 0.66, y: val, color: .red)
         }
 
         
