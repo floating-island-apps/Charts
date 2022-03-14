@@ -15,17 +15,20 @@ open class RangeBarChartDataEntry: ChartDataEntry
     /// range-low value
     @objc open var low = Double(0.0)
     
+    /// gradient color value
+    @objc open var colors = [UIColor]()
+    
     public required init()
     {
         super.init()
     }
     
-    @objc public init(x: Double, high: Double, low: Double)
+    @objc public init(x: Double, high: Double, low: Double, colors: [NSUIColor] = [])
     {
         super.init(x: x, y: (high + low) / 2.0)
-        
         self.high = high
         self.low = low
+        self.colors = colors
     }
 
     @objc public convenience init(x: Double, high: Double, low: Double, icon: NSUIImage?)

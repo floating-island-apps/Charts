@@ -91,7 +91,7 @@ class RangeBarChartViewController: DemoBaseViewController {
         set1.axisDependency = .left
         set1.setColor(UIColor(white: 80/255, alpha: 1))
         set1.drawIconsEnabled = false
-        set1.barWidth = 4
+        set1.barWidth = 2
         set1.drawValuesEnabled = false
         let data = RangeBarChartData(dataSet: set1)
         chartView.data = data

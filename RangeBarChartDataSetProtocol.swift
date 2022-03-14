@@ -26,6 +26,6 @@ public protocol RangeBarChartDataSetProtocol: LineScatterCandleRadarChartDataSet
     var barWidth: CGFloat { get set }
     
     /// the color of the bar
-    var barColor: UIColor { get set }
+    var barColor: NSUIColor { get set }
 
 }

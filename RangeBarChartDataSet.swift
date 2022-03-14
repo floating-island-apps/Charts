@@ -76,7 +76,7 @@ open class RangeBarChartDataSet: LineScatterCandleRadarChartDataSet, RangeBarCha
     open var barWidth = CGFloat(1.5)
     
     /// the color of the bar
-    open var barColor: UIColor = .red
+    open var barColor: NSUIColor = .red
     
 }
 
