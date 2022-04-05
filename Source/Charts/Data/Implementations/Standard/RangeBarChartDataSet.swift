@@ -50,26 +50,7 @@ open class RangeBarChartDataSet: LineScatterCandleRadarChartDataSet, RangeBarCha
     
     // MARK: - Styling functions and accessors
     
-    /// the space between the candle entries
-    ///
-    /// **default**: 0.1 (10%)
-    private var _barSpace: CGFloat = 0.1
 
-    /// the space that is left out on the left and right side of each candle,
-    /// **default**: 0.1 (10%), max 0.45, min 0.0
-    open var barSpace: CGFloat
-    {
-        get
-        {
-            return _barSpace
-        }
-        set
-        {
-            _barSpace = newValue.clamped(to: 0...0.45)
-        }
-    }
-    
-    
     /// the width of the bar in pixels.
     ///
     /// **default**: 1.5

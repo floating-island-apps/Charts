@@ -81,7 +81,7 @@ open class RangeBarChartRenderer: LineScatterCandleRadarRenderer
 
             _barRect.origin.x = CGFloat(e.x)
             _barRect.origin.y = CGFloat(e.high * phaseY)
-            _barRect.size.width = barWidth
+            _barRect.size.width = barWidth * phaseY
             _barRect.size.height = CGFloat(abs(e.high - e.low) * phaseY)
             trans.rectValueToPixel(&_barRect)
                 
