@@ -15,6 +15,6 @@ Pod::Spec.new do |s|
   
   s.subspec "Core" do |ss|
     ss.source_files  = "Source/Charts/**/*.swift"
-    ss.dependency 'SwiftAlgorithms', '~> 1.0'
+    ss.dependency 'SwiftAlgorithms', '~> 1.2'
   end
 end
